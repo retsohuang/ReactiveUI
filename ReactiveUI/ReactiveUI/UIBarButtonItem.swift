@@ -33,7 +33,7 @@ public extension UIBarButtonItem {
     func addAction(action: UIBarButtonItem -> ()) {
         removeAction()
         
-        proxyTarget = RUIBarButtonItemProxyTarget(action)
+        proxyTarget = RUIBarButtonItemProxyTarget(action: action)
         target = proxyTarget
         self.action = RUIBarButtonItemProxyTarget.actionSelector()
     }
@@ -66,7 +66,7 @@ internal extension UIBarButtonItem {
             if let targets = objc_getAssociatedObject(self, &RUIProxyTargetsKey) as? RUIBarButtonItemProxyTarget {
                 return targets
             } else {
-                return setProxyTargets(RUIBarButtonItemProxyTarget({_ in}))
+              return setProxyTargets(RUIBarButtonItemProxyTarget(action: { _ in }))
             }
         }
         set {
